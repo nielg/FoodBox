@@ -1,0 +1,164 @@
+.inventory {
+  width: 100%;
+  max-width: 960px;
+  margin: 1.5rem auto 0;
+  overflow: hidden;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tableHead {
+  background: var(--gradient-seafoam);
+}
+
+.heading {
+  padding: 1rem 1.25rem;
+  color: var(--primary-800);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.quantityHeading,
+.quantity,
+.actionsHeading {
+  text-align: right;
+}
+
+.row {
+  border-top: 1px solid var(--border-subtle);
+  transition: background-color 0.15s ease;
+}
+
+.row:nth-child(odd) {
+  background-color: var(--bg-surface-subtle);
+}
+
+.row:nth-child(even) {
+  background-color: var(--bg-surface);
+}
+
+.row:hover {
+  background-color: var(--primary-100);
+}
+
+.cell {
+  padding: 1rem 1.25rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.row:nth-child(odd) .cell {
+  color: var(--text-primary);
+}
+
+.row .cell:first-child {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.quantity {
+  color: var(--primary-700);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.actionsCell {
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.row:hover .actions,
+.row:focus-within .actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.actionButton {
+  display: inline-flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 0.6rem;
+  background-color: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.actionButton:hover {
+  transform: translateY(-1px);
+}
+
+.actionButton:focus-visible {
+  outline: 3px solid var(--primary-200);
+  outline-offset: 2px;
+}
+
+.add:hover {
+  border-color: var(--primary-400);
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+}
+
+.remove:hover {
+  border-color: var(--error);
+  background-color: var(--error-bg);
+  color: var(--error-hover);
+}
+
+.request:hover {
+  border-color: var(--secondary-500);
+  background-color: var(--secondary-50);
+  color: var(--secondary-600);
+}
+
+@media (max-width: 600px) {
+  .inventory {
+    margin-top: 1rem;
+    border-radius: 0.75rem;
+  }
+
+  .heading,
+  .cell {
+    padding: 0.85rem 1rem;
+  }
+}
+
+@media (hover: none) {
+  .actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

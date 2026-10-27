@@ -1,5 +1,5 @@
 ---
-import ConfirmModal from "@/components/ConfirmModal.astro";
+import ConfirmModal from "@/components/global/ConfirmModal.astro";
 ---
 
 <section class="danger-zone" aria-labelledby="danger-zone-heading">
@@ -23,7 +23,7 @@ import ConfirmModal from "@/components/ConfirmModal.astro";
     modalId="delete-account"
     title="Delete Account"
     message="This action cannot be undone. Are you sure you want to proceed?"
-    actionUrl="/api/user/delete-user"
+    actionUrl="/api/user/delete"
     method="DELETE"
   />
 </section>

@@ -1,12 +1,12 @@
-# 🍲 DishBox
+# 🍲 FoodBox
 
-**DishBox** is a modern, self-hosted web application for managing, organizing, and saving your personal cooking recipes. The application is built with a strong focus on performance, type-safety, and a modular layered architecture.
+**FoodBox** is a modern, self-hosted web application for managing, organizing, and saving your personal cooking recipes. The application is built with a strong focus on performance, type-safety, and a modular layered architecture.
 
 ---
 
 ## 1. Project Overview & Architecture
 
-DishBox combines Server-Side Rendering (SSR) for fast page loads and SEO with interactive client-side components (React Islands) where needed.
+FoodBox combines Server-Side Rendering (SSR) for fast page loads and SEO with interactive client-side components (React Islands) where needed.
 
 ### Tech Stack
 
@@ -23,7 +23,7 @@ DishBox combines Server-Side Rendering (SSR) for fast page loads and SEO with in
 ## 2. Directory Structure
 
 ```text
-dishBox/
+FoodBox/
 ├── public/                 # Static public files (favicons, etc.)
 ├── src/
 │   ├── assets/             # Static assets optimized by Astro (e.g. images)

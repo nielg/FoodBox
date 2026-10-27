@@ -14,13 +14,13 @@
     "db:initialize": "node dbInitialize.js"
   },
   "dependencies": {
-    "@astrojs/node": "^11.1.7",
-    "@astrojs/react": "^7.0.1",
+    "@astrojs/node": "^11.1.9",
+    "@astrojs/react": "^7.1.1",
     "@iconify-json/lucide": "^1.2.114",
     "@supabase/supabase-js": "^2.112.4",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "astro": "^7.3.8",
+    "astro": "^7.4.2",
     "astro-icon": "^1.1.5",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^13.2.0",

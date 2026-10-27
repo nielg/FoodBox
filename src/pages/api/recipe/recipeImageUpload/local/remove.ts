@@ -3,7 +3,7 @@ import { unlink } from "node:fs/promises";
 import path from "node:path";
 import { UPLOAD_DIR } from "astro:env/server";
 import authService from "@/service/authService";
-import recipeService from "@/service/recipeService";
+import recipeService from "@/service/dishBox/recipeService";
 
 export const prerender = false;
 

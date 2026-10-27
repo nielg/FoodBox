@@ -1,12 +1,12 @@
 ---
-import Header from "@/components/layout/Header.astro";
 import Layout from "@/components/layouts/Layout.astro";
+import Header from "../global/Header.astro";
 
 interface Props {
   title?: string;
 }
 
-const { title = "DishBox" } = Astro.props;
+const { title = "FoodBox" } = Astro.props;
 ---
 
 <Layout title={title}>

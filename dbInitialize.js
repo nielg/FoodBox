@@ -431,6 +431,29 @@ const seedUsers = [
   },
 ];
 
+const seedStockItems = [
+  { name: "Rice", metric: "g", quantity: 1000 },
+  { name: "Pasta", metric: "g", quantity: 500 },
+  { name: "Flour", metric: "g", quantity: 1000 },
+  { name: "Sugar", metric: "g", quantity: 500 },
+  { name: "Olive oil", metric: "ml", quantity: 500 },
+  { name: "Salt", metric: "g", quantity: 250 },
+  { name: "Black pepper", metric: "g", quantity: 100 },
+  { name: "Canned tomatoes", metric: "can", quantity: 4 },
+  { name: "Chickpeas", metric: "can", quantity: 3 },
+  { name: "Coconut milk", metric: "can", quantity: 2 },
+  { name: "Lentils", metric: "g", quantity: 750 },
+  { name: "Vegetable broth", metric: "ml", quantity: 1000 },
+  { name: "Garlic", metric: "piece", quantity: 2 },
+  { name: "Onion", metric: "piece", quantity: 5 },
+  { name: "Eggs", metric: "piece", quantity: 12 },
+  { name: "Milk", metric: "ml", quantity: 1000 },
+  { name: "Butter", metric: "g", quantity: 250 },
+  { name: "Parmesan", metric: "g", quantity: 150 },
+  { name: "Spinach", metric: "g", quantity: 300 },
+  { name: "Potatoes", metric: "g", quantity: 1500 },
+];
+
 const availableImages = [
   "images1.jpg",
   "images2.jpg",
@@ -441,10 +464,11 @@ const availableImages = [
 
 if (
   seedUsers.length !== 2 ||
-  seedUsers.some((user) => user.recipes.length !== 10)
+  seedUsers.some((user) => user.recipes.length !== 10) ||
+  seedStockItems.length !== 20
 ) {
   throw new Error(
-    "Database initialization requires two users with 10 recipes each.",
+    "Database initialization requires two users with 10 recipes each and 20 stock items.",
   );
 }
 
@@ -470,6 +494,7 @@ async function dbInitialize() {
       );
     }
 
+    const initializedUsers = [];
     let imageIndex = 0;
 
     for (const user of seedUsers) {
@@ -493,6 +518,7 @@ async function dbInitialize() {
       if (!createdUser) {
         throw new Error(`Failed to initialize sample user ${user.username}.`);
       }
+      initializedUsers.push(createdUser);
 
       for (const recipe of user.recipes) {
         const [existingRecipe] = await tx`
@@ -557,6 +583,83 @@ async function dbInitialize() {
         `;
       }
     }
+
+    const stockItemIds = [];
+    const stockItemOwnerId = initializedUsers[0].id;
+    for (const item of seedStockItems) {
+      const [existingItem] = await tx`
+        SELECT id
+        FROM stockbox.stock_items
+        WHERE user_id = ${stockItemOwnerId}
+          AND name = ${item.name}
+          AND public = true
+        LIMIT 1
+      `;
+
+      const [savedItem] = existingItem
+        ? await tx`
+            UPDATE stockbox.stock_items
+            SET metric = ${item.metric}, public = true
+            WHERE id = ${existingItem.id}
+            RETURNING id
+          `
+        : await tx`
+            INSERT INTO stockbox.stock_items (user_id, name, metric, public)
+            VALUES (${stockItemOwnerId}, ${item.name}, ${item.metric}, true)
+            RETURNING id
+          `;
+
+      if (!savedItem) {
+        throw new Error(`Failed to initialize stock item "${item.name}".`);
+      }
+      stockItemIds.push(savedItem.id);
+    }
+
+    for (const [userIndex, user] of initializedUsers.entries()) {
+      const firstItemIndex = userIndex * 10;
+      for (
+        let index = firstItemIndex;
+        index < firstItemIndex + 10;
+        index += 1
+      ) {
+        const item = seedStockItems[index];
+        const stockItemId = stockItemIds[index];
+        const [existingBatch] = await tx`
+          SELECT id
+          FROM stockbox.stock_batches
+          WHERE user_id = ${user.id}
+            AND stock_item_id = ${stockItemId}
+          LIMIT 1
+        `;
+
+        const [savedBatch] = existingBatch
+          ? await tx`
+              UPDATE stockbox.stock_batches
+              SET quantity = ${item.quantity},
+                  expire_date = NOW() + INTERVAL '90 days'
+              WHERE id = ${existingBatch.id}
+              RETURNING id
+            `
+          : await tx`
+              INSERT INTO stockbox.stock_batches (
+                user_id, stock_item_id, quantity, expire_date
+              )
+              VALUES (
+                ${user.id},
+                ${stockItemId},
+                ${item.quantity},
+                NOW() + INTERVAL '90 days'
+              )
+              RETURNING id
+            `;
+
+        if (!savedBatch) {
+          throw new Error(
+            `Failed to initialize stock batch for user ${user.id}.`,
+          );
+        }
+      }
+    }
   });
 
   for (const user of seedUsers) {
@@ -564,6 +667,9 @@ async function dbInitialize() {
       `Initialized ${user.recipes.length} recipes for ${user.username}.`,
     );
   }
+  console.log(
+    `Initialized ${seedStockItems.length} public stock items and 10 batches per user.`,
+  );
 }
 
 if (

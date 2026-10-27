@@ -1,11 +1,11 @@
 ---
-import Button from "@/components/layout/Button.astro";
-import WelcomeHeader from "@/components/layout/WelcomeHeader.astro";
+import Button from "@/components/global/Button.astro";
+import WelcomeHeader from "@/components/global/WelcomeHeader.astro";
 import BaseLayout from "@/components/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
-import RecipesService from "@/service/recipeService";
-import RecipesGrid from "@/components/recipes/RecipesGrid.tsx";
 import type { RecipeMetaDataResponse } from "@/types/recipe/recipe.schemas";
+import RecipesService from "@/service/dishBox/recipeService";
+import RecipesGrid from "@/components/dishBox/recipe/recipeContainers/RecipesGrid";
 
 const { user_id } = Astro.locals;
 if (!user_id) return Astro.redirect("/user/login");
@@ -22,7 +22,7 @@ const recipes: RecipeMetaDataResponse[] =
       />
       <Button
         text="Add new recipe"
-        link="/myRecipes/edit"
+        link="/dishBox/edit"
         iconName="lucide:plus"
       />
     </div>
@@ -39,7 +39,7 @@ const recipes: RecipeMetaDataResponse[] =
           <p>Start building your cookbook by adding your first recipe.</p>
           <Button
             text="Add your first recipe"
-            link="/myRecipes/edit"
+            link="/dishBox/edit"
             iconName="lucide:plus"
           />
         </div>

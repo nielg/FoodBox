@@ -33,7 +33,7 @@ export default function UpdateUser({ initData }: Props) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/user/update-user", {
+      const response = await fetch("/api/user/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

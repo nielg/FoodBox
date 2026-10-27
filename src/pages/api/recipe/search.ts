@@ -1,6 +1,6 @@
 import type { ApiResponse } from "@/types";
 import type { APIRoute } from "astro";
-import recipeService from "@/service/recipeService";
+import recipeService from "@/service/dishBox/recipeService";
 import authService from "@/service/authService";
 export const GET: APIRoute = async ({ request, cookies }) => {
   const auth = await authService.getAuthenticatedUserId(cookies);

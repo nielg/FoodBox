@@ -1,11 +1,10 @@
 ---
 import BaseLayout from "../components/layouts/BaseLayout.astro";
-import RecipeService from "@/service/recipeService";
-import RecipesCarrousel from "@/components/recipes/RecipesCarrousel.astro";
 import type { RecipeMetaDataResponse } from "@/types/recipe/recipe.schemas";
-import SearchRecipe from "@/components/recipes/SearchRecipe";
-import TagRepository from "@/repository/tagRepository";
-
+import SearchRecipe from "@/components/dishBox/recipe/SearchRecipe";
+import RecipeService from "@/service/dishBox/recipeService";
+import TagRepository from "@/repository/dishBox/recipes/tagRepository";
+import RecipesCarrousel from "@/components/dishBox/recipe/recipeContainers/RecipesCarrousel.astro";
 const { user_id } = Astro.locals;
 
 const recipes: RecipeMetaDataResponse[] =

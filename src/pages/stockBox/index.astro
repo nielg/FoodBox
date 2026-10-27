@@ -1,7 +1,22 @@
 ---
 import BaseLayout from "@/components/layouts/BaseLayout.astro";
+import CreateStockItemModal from "@/components/modals/CreateStockItemModal";
+import InventoryTable from "@/components/stockBox/inventory/InventoryTable";
+import ItemService from "@/service/stockBox/ItemServices";
+import type { StockInventoryResponse } from "@/types/stock/stock.schema";
+
+const { user_id } = Astro.locals;
+
+if (!user_id) {
+  return Astro.redirect("user/login");
+}
+
+const inventory: StockInventoryResponse[] =
+  await ItemService.getInventoryByUserId(user_id);
 ---
 
 <BaseLayout>
   <h1>stockBox</h1>
+  <CreateStockItemModal client:load />
+  <InventoryTable inventory={inventory} client:load />
 </BaseLayout>

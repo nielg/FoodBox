@@ -1,6 +1,6 @@
 import type { ApiResponse } from "@/types";
 import type { APIRoute } from "astro";
-import recipeService from "@/service/recipeService";
+import recipeService from "@/service/dishBox/recipeService";
 import { handleZodValidationError } from "@/service";
 import authService from "@/service/authService";
 import { CreateRecipeSchema } from "@/types/recipe/recipe.schemas";

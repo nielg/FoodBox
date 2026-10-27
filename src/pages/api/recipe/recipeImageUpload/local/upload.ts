@@ -37,6 +37,6 @@ export const POST: APIRoute = async ({ request, cookies, url }) => {
     Buffer.from(await file.arrayBuffer()),
   );
 
-  const img_path = `/myRecipes/images/${user_id}/${name}`;
+  const img_path = `/dishBox/images/${user_id}/${name}`;
   return Response.json({ url: new URL(img_path, url.origin).href });
 };

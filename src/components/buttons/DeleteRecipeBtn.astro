@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import ConfirmModal from "../ConfirmModal.astro";
+import ConfirmModal from "../global/ConfirmModal.astro";
 
 interface Props {
   recipeId: number;
@@ -23,10 +23,9 @@ const { recipeId } = Astro.props;
   modalId="delete-recipe"
   title="Delete Recipe"
   message="This action cannot be undone. Are you sure you want to proceed?"
-  actionUrl="/api/recipe/deleteRecipe"
-  redirectUrl="/myRecipes"
+  actionUrl=`/api/recipe/${recipeId}/delete`
+  redirectUrl="/dishBox"
   method="DELETE"
-  body={JSON.stringify({ id: recipeId })}
 />
 
 <style>

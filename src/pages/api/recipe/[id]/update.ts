@@ -1,5 +1,5 @@
 import authService from "@/service/authService";
-import RecipesService from "@/service/recipeService";
+import RecipesService from "@/service/dishBox/recipeService";
 import type { ApiResponse } from "@/types";
 import type { APIRoute } from "astro";
 
