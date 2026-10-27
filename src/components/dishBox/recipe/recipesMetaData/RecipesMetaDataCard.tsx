@@ -10,9 +10,9 @@ type Props = {
 };
 
 export default function RecipesCard({ data, userId }: Props) {
-  const defaultImg = "/myRecipes/images/public/default-img.png";
+  const defaultImg = "/dishBox/images/public/default-img.png";
   return (
-    <a href={`/myRecipes/${data.id}`} className={s.cardLink}>
+    <a href={`/dishBox/${data.id}`} className={s.cardLink}>
       <article className={s.card}>
         <div className={s.cardThumbnail}>
           <img

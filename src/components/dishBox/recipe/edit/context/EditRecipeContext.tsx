@@ -199,7 +199,7 @@ export function EditRecipeProvider({ children }: { children: ReactNode }) {
       });
 
       if (response.ok) {
-        window.location.href = `/myRecipes`;
+        window.location.href = `/dishBox`;
       } else {
         const errorData = await response.json();
         console.error(`Error: ${errorData.error || "Failed to create recipe"}`);
@@ -225,7 +225,7 @@ export function EditRecipeProvider({ children }: { children: ReactNode }) {
       });
 
       if (response.ok) {
-        window.location.href = `/myRecipes/${formData.id}`;
+        window.location.href = `/dishBox/${formData.id}`;
       } else {
         const errorData = await response.json();
         console.error(`Error: ${errorData.error || "Failed to update recipe"}`);

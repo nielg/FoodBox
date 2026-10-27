@@ -26,7 +26,7 @@ export const onRequest = defineMiddleware((context, next) => {
   }
 
   // Define protected paths (use exact path prefixes, omit wildcards)
-  const protectedRoutes = ["/myRecipes", "/user/profile"];
+  const protectedRoutes = ["/dishBox", "/user/profile"];
   const url = new URL(context.request.url);
 
   const isProtectedRoute = protectedRoutes.some((path) =>

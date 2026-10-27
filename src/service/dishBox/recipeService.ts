@@ -73,7 +73,11 @@ async function getVeganRecipesMetaData(userId?: number) {
   });
 }
 
-const recipeService = {
+async function getRecipeById(recipeId: number) {
+  return await RecipesRepository.getRecipeById(recipeId);
+}
+
+const RecipeService = {
   createRecipe,
   getRecipesMetaDataByUserid,
   getPublickRecipesMetaData,
@@ -82,6 +86,7 @@ const recipeService = {
   getUserFavoriteRecipesMetaData,
   searchRecipesMetaData,
   getVeganRecipesMetaData,
+  getRecipeById,
 };
 
-export default recipeService;
+export default RecipeService;

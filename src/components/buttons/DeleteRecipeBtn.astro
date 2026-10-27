@@ -24,7 +24,7 @@ const { recipeId } = Astro.props;
   title="Delete Recipe"
   message="This action cannot be undone. Are you sure you want to proceed?"
   actionUrl="/api/recipe/deleteRecipe"
-  redirectUrl="/myRecipes"
+  redirectUrl="/dishBox"
   method="DELETE"
   body={JSON.stringify({ id: recipeId })}
 />

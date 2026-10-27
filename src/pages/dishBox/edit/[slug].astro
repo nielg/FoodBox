@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "@/components/layouts/BaseLayout.astro";
-import EditRecipeForm from "@/components/myRecipes/edit/EditRecipeForm";
-import WelcomeHeader from "@/components/layout/WelcomeHeader.astro";
+import EditRecipeForm from "@/components/dishBox/recipe/edit/EditRecipeForm";
+import WelcomeHeader from "@/components/global/WelcomeHeader.astro";
 import GoBackBtn from "@/components/buttons/GoBackBtn.astro";
-import RecipesService from "@/repository/dishBox/recipesRepositorypository";
-import TagRepository from "@/repository/dishBox/recipes/tagRepositoryes/tagRepository";
 import type { RecipeResponse } from "@/types/recipe/recipe.schemas";
 import DeleteRecipeBtn from "@/components/buttons/DeleteRecipeBtn.astro";
+import TagRepository from "@/repository/dishBox/recipes/tagRepository";
+import RecipeService from "@/service/dishBox/recipeService";
 
 const tags = await TagRepository.getAllTags();
 const { slug } = Astro.params;
@@ -18,7 +18,7 @@ if (slug) {
 
   if (!isNaN(id)) {
     try {
-      recipe = await RecipesService.getRecipeById(id);
+      recipe = await RecipeService.getRecipeById(id);
     } catch (error) {
       console.error(`Failed to fetch recipe with ID ${id}:`, error);
     }
@@ -38,7 +38,7 @@ if (!recipe || isForbidden) {
 <BaseLayout title="Edit Recipe | DishBox">
   <div class="page-wrapper">
     <div class="page-nav">
-      <GoBackBtn href="/myRecipes" />
+      <GoBackBtn href="/dishBox" />
       <DeleteRecipeBtn recipeId={recipe.id} />
     </div>
     <WelcomeHeader

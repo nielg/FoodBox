@@ -2,7 +2,7 @@ import { useState } from "react";
 import DynamicInputList from "./DynamicInputList";
 import DynamicInputItemSlot from "./DynamicInputItemSlot";
 import styles from "@/styles/components/editRecipe/inputPreview.module.css";
-import { useEditRecipe } from "../myRecipes/edit/context/EditRecipeContext";
+import { useEditRecipe } from "../context/EditRecipeContext";
 
 export function DynamicIngredientsList() {
   const { updateListItem, formData, addListItem, deleteListItem } =

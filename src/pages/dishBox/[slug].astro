@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "@/components/layouts/BaseLayout.astro";
-import RecipesService from "@/repository/dishBox/recipesRepositorypository";
 import GoBackBtn from "@/components/buttons/GoBackBtn.astro";
 import type { RecipeResponse } from "@/types/recipe/recipe.schemas";
-import Recipe from "@/components/myRecipes/Recipe";
 import EditRecipeBtn from "@/components/buttons/EditRecipeBtn.astro";
+import Recipe from "@/components/dishBox/recipe/Recipe";
+import RecipeService from "@/service/dishBox/recipeService";
 
 const { slug } = Astro.params;
 const { user_id } = Astro.locals;
@@ -16,7 +16,7 @@ if (slug) {
 
   if (!isNaN(id)) {
     try {
-      recipe = await RecipesService.getRecipeById(id);
+      recipe = await RecipeService.getRecipeById(id);
     } catch (error) {
       console.error(`Failed to fetch recipe with ID ${id}:`, error);
     }
@@ -24,6 +24,7 @@ if (slug) {
 }
 
 const isForbidden = !recipe?.public && recipe?.user_id !== user_id;
+console.log(isForbidden, recipe);
 
 if (!recipe || isForbidden) {
   return new Response(null, {
@@ -37,7 +38,7 @@ if (!recipe || isForbidden) {
   title={recipe ? `${recipe.title} | DishBox` : "Recipe Not Found | DishBox"}
 >
   <div class="recipe-nav">
-    <GoBackBtn href="/myRecipes" />
+    <GoBackBtn href="/dishBox" />
 
     {recipe?.user_id === user_id && <EditRecipeBtn recipeId={recipe.id} />}
   </div>
