@@ -1,10 +1,12 @@
 @baseUrl = http://localhost:4321
+@recipeId = 1
+@stockItemId = 1
 
 ###############################################################################
 # USER AUTHENTICATION & MANAGEMENT
 ###############################################################################
 
-### 1. Register a new user
+### Register a user
 # @name registerUser
 POST {{baseUrl}}/api/user/register
 Content-Type: application/json
@@ -17,7 +19,7 @@ Content-Type: application/json
   "password": "Password123!"
 }
 
-### 2. Login user (Sets session cookie in REST Client)
+### Login (REST Client should retain the session cookie for following requests)
 # @name loginUser
 POST {{baseUrl}}/api/user/login
 Content-Type: application/json
@@ -27,61 +29,191 @@ Content-Type: application/json
   "password": "Password123!"
 }
 
-### 3. Logout user
+### Logout
 # @name logoutUser
 GET {{baseUrl}}/api/user/logout
 
-### 4. Delete user account (Requires active login session)
-# @name deleteUser
-DELETE {{baseUrl}}/api/user/delete-user
-Content-Type: application/json
-
-### 5. Update user account (Requires active login session)
+### Update current user
 # @name updateUser
-PUT {{baseUrl}}/api/user/update-user
+PUT {{baseUrl}}/api/user/update
 Content-Type: application/json
 
 {
-  "username": "updateduser",
-  "firstname": "Jane",
-  "lastname": "Smith"
+  "username": "testuser",
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john.doe@example.com",
+  "password": "Password123!"
 }
 
+### Delete current user (destructive)
+# @name deleteUser
+DELETE {{baseUrl}}/api/user/delete
 
 ###############################################################################
 # RECIPES
 ###############################################################################
 
-### 5. Create a new recipe (Requires active login session)
+### Search recipes (optional query and repeatable tags parameters)
+# @name searchRecipes
+GET {{baseUrl}}/api/recipe/search?query=pasta&tags=vegetarian&tags=quick
+
+### Create a recipe
 # @name createRecipe
 POST {{baseUrl}}/api/recipe/create
 Content-Type: application/json
 
 {
   "title": "Spaghetti Carbonara",
-  "description": "A classic Italian pasta dish with eggs, cheese, pancetta, and black pepper.",
+  "description": "A classic Italian pasta dish.",
   "portions": 4,
   "ingredients": [
     "400g spaghetti",
-    "150g pancetta or guanciale",
+    "150g pancetta",
     "4 large eggs",
-    "50g Pecorino Romano grated",
-    "Freshly ground black pepper"
+    "50g grated Pecorino Romano",
+    "Black pepper"
   ],
   "instructions": [
-    "Boil spaghetti in salted water until al dente.",
-    "Fry pancetta in a pan until crispy.",
-    "Whisk eggs and cheese together in a bowl.",
-    "Combine pasta, pancetta, and egg mixture off the heat, tossing quickly."
+    "Boil spaghetti until al dente.",
+    "Fry pancetta until crispy.",
+    "Whisk eggs and cheese together.",
+    "Toss pasta with pancetta and egg mixture off the heat."
   ],
-  "public": true
+  "tags": ["pasta"],
+  "public": true,
+  "imgurls": []
 }
 
-### 6. Delete a recipe by ID (Requires active login session)
-# @name deleteRecipe
-DELETE {{baseUrl}}/api/recipe/deleteRecipe
+### Update a recipe
+# @name updateRecipe
+PUT {{baseUrl}}/api/recipe/{{recipeId}}/update
 Content-Type: application/json
 
 {
-  "id": 25
+  "title": "Updated Carbonara",
+  "description": "Updated recipe description.",
+  "portions": 4,
+  "ingredients": ["400g spaghetti", "150g pancetta"],
+  "instructions": ["Cook the pasta.", "Combine ingredients."],
+  "tags": ["pasta"],
+  "public": true,
+  "imgurls": []
+}
+
+### Delete a recipe (destructive)
+# @name deleteRecipe
+DELETE {{baseUrl}}/api/recipe/{{recipeId}}/delete
+
+### Add recipe to current user's favorites
+# @name addRecipeFavorite
+POST {{baseUrl}}/api/recipe/{{recipeId}}/favorite/add
+
+### Remove recipe from current user's favorites
+# @name removeRecipeFavorite
+DELETE {{baseUrl}}/api/recipe/{{recipeId}}/favorite/remove
+
+### Upload a local recipe image (replace the file path with an existing image)
+# @name uploadLocalRecipeImage
+POST {{baseUrl}}/api/recipe/recipeImageUpload/local/upload
+Content-Type: multipart/form-data; boundary=DishBoxBoundary
+
+--DishBoxBoundary
+Content-Disposition: form-data; name="image"; filename="recipe.jpg"
+Content-Type: image/jpeg
+
+< ./recipe.jpg
+--DishBoxBoundary--
+
+### Remove local recipe images (provide URLs returned by the upload endpoint)
+# @name removeLocalRecipeImages
+DELETE {{baseUrl}}/api/recipe/recipeImageUpload/local/remove
+Content-Type: application/json
+
+[
+  "http://localhost:4321/dishBox/images/1/replace-with-uploaded-image.jpg"
+]
+
+### Request a signed Supabase image upload URL
+# @name createSupabaseUploadUrl
+POST {{baseUrl}}/api/recipe/recipeImageUpload/supabase/uploadURL
+Content-Type: application/json
+
+{
+  "fileType": "image/jpeg"
+}
+
+###############################################################################
+# STOCK BOX
+###############################################################################
+
+### Create a stock item
+# @name createStockItem
+POST {{baseUrl}}/api/stockBox/item/add
+Content-Type: application/json
+
+{
+  "name": "Milk",
+  "metric": "liters"
+}
+
+### Add quantity to a stock item batch
+# @name addStockQuantity
+POST {{baseUrl}}/api/stockBox/item/{{stockItemId}}/quantity/add
+Content-Type: application/json
+
+{
+  "quantity": 2,
+  "expireDate": "2027-12-31"
+}
+
+### Remove quantity from a stock item batch
+# @name removeStockQuantity
+POST {{baseUrl}}/api/stockBox/item/{{stockItemId}}/quantity/remove
+Content-Type: application/json
+
+{
+  "quantity": 1,
+  "expireDate": "2027-12-31"
+}
+
+### Create a request row (fails with 409 if one already exists)
+# @name createStockRequest
+POST {{baseUrl}}/api/stockBox/item/{{stockItemId}}/request
+Content-Type: application/json
+
+{
+  "quantity": 3
+}
+
+### Add quantity to an existing request (or create one if missing)
+# @name addStockRequestQuantity
+POST {{baseUrl}}/api/stockBox/item/{{stockItemId}}/quantity/request
+Content-Type: application/json
+
+{
+  "quantity": 2
+}
+
+### Remove quantity from a request (deletes the row when quantity reaches zero)
+# @name removeStockRequestQuantity
+POST {{baseUrl}}/api/stockBox/item/{{stockItemId}}/quantity/request/remove
+Content-Type: application/json
+
+{
+  "quantity": 1
+}
+
+###############################################################################
+# TEMPLATE / EXAMPLE ROUTE
+###############################################################################
+
+### Validate the template endpoint payload
+# @name template
+POST {{baseUrl}}/api/template
+Content-Type: application/json
+
+{
+  "title": "Example",
+  "portions": 2
 }
