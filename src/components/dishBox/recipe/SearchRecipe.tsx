@@ -40,7 +40,6 @@ export default function SearchRecipe({ initialRecipes, tags, userId }: Props) {
         if (activeTags.length > 0) {
           activeTags.forEach((tag) => params.append("tags", tag));
         }
-        console.log(`/api/recipe/search?${params.toString()}`);
         const response = await fetch(`/api/recipe/search?${params.toString()}`);
 
         if (!response.ok) {

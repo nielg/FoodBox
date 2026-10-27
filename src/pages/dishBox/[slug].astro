@@ -24,7 +24,6 @@ if (slug) {
 }
 
 const isForbidden = !recipe?.public && recipe?.user_id !== user_id;
-console.log(isForbidden, recipe);
 
 if (!recipe || isForbidden) {
   return new Response(null, {

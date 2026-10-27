@@ -13,8 +13,6 @@ if (!user_id) {
 
 const inventory: StockInventoryResponse[] =
   await ItemService.getInventoryByUserId(user_id);
-
-console.log(inventory[0].expireDates);
 ---
 
 <BaseLayout>

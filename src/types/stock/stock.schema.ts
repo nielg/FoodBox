@@ -20,6 +20,10 @@ export const StockBatchRequestSchema = z.object({
   expireDate: z.coerce.date(),
 });
 
+export const StockRequestQuantitySchema = z.object({
+  quantity: z.number().int().positive(),
+});
+
 const ExpireDateSchema = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/, "Expiration date must use YYYY-MM-DD format")

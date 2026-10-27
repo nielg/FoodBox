@@ -1,18 +1,24 @@
 import {
-  addBatchItem,
   addItemQuantity,
   createStockItem,
   removeItemQuantity,
-} from "./mutations";
-import { getStockInventory, getStockItems } from "./queries";
+} from "./itemBatch/mutations";
+import { getStockInventory, getStockItems } from "./itemBatch/queries";
+import {
+  addRequestQuantity,
+  createRequest,
+  removeRequestQuantity,
+} from "./requests";
 
 const StockRepository = {
   getStockItems,
   getStockInventory,
   createStockItem,
-  addBatchItem,
   addItemQuantity,
   removeItemQuantity,
+  addRequestQuantity,
+  createRequest,
+  removeRequestQuantity,
 };
 
 export default StockRepository;
