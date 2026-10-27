@@ -2,10 +2,9 @@ import RecipesRepository from "@/repository/dishBox/recipesRepository";
 import type { ApiResponse } from "@/types";
 import type { APIRoute } from "astro";
 
-export const DELETE: APIRoute = async ({ request }): Promise<Response> => {
+export const DELETE: APIRoute = async ({ params }): Promise<Response> => {
   try {
-    const data = await request.json();
-    const { id: recipeId } = data;
+    const recipeId = Number(params.id);
 
     if (!recipeId) {
       const errorPayload: ApiResponse = {
