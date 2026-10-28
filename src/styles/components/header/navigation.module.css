@@ -1,0 +1,22 @@
+.mainNav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 3rem;
+  align-self: flex-end;
+}
+.dropNav {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-app);
+  color: black;
+  font-size: small;
+  padding: 10px 30px;
+}
+
+.dropNav.active {
+  display: flex;
+}
