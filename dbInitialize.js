@@ -573,7 +573,7 @@ async function dbInitialize() {
         }
 
         const imageName = availableImages[imageIndex % availableImages.length];
-        const imageUrl = `/myRecipes/images/public/${imageName}`;
+        const imageUrl = `/dishBox/images/public/${imageName}`;
         imageIndex += 1;
 
         await tx`DELETE FROM dishBox.recipe_images WHERE recipe_id = ${savedRecipe.id}`;

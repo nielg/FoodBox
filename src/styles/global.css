@@ -190,6 +190,11 @@ h3 {
   transition: transform 0.2s ease;
 }
 
+.noBtn {
+  all: unset;
+  cursor: pointer;
+}
+
 /* Text align */
 
 .text-center {

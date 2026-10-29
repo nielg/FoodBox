@@ -1,0 +1,89 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+
+.mainNav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 5rem;
+  width: 100%;
+}
+
+.dropNav {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem 5px 2rem;
+  margin-top: 8px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.dropNav::before,
+.dropNav::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+}
+
+.dropNav::before {
+  z-index: -2;
+  background: var(--bg-app);
+  filter: drop-shadow(var(--shadow-md));
+}
+
+.dropNav::after {
+  z-index: -1;
+  background: var(--bg-app);
+  clip-path: polygon(
+    calc(8% + 1px) 1px,
+    calc(100% - 1px) 1px,
+    calc(92% - 1px) calc(100% - 1px),
+    1px calc(100% - 1px)
+  );
+}
+
+.dropNav a {
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.375rem;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.dropNav a:hover,
+.dropNav a:focus-visible {
+  color: var(--text-brand);
+  background-color: var(--primary-50);
+}
+
+.arrow {
+  position: absolute;
+  top: -14px;
+  width: 28px;
+  height: 18px;
+  margin-left: -14px;
+  overflow: visible;
+  fill: var(--bg-app);
+  stroke-linejoin: round;
+  transition: left 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow,
+  .dropNav a {
+    transition: none;
+  }
+}
