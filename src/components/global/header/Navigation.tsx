@@ -13,6 +13,17 @@ export default function Navigation() {
   });
 
   useEffect(() => {
+    if (!activeNav) {
+      const pathname = window.location.pathname;
+      if (pathname.startsWith("/dishBox")) {
+        setActiveNav("dishBox");
+      } else if (pathname.startsWith("/stockBox")) {
+        setActiveNav("stockBox");
+      } else {
+        setActiveNav("dishBox");
+      }
+    }
+
     if (!activeNav) return;
 
     const updateArrowPosition = () => {
