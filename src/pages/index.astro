@@ -5,6 +5,7 @@ import SearchRecipe from "@/components/dishBox/recipe/SearchRecipe";
 import RecipeService from "@/service/dishBox/recipeService";
 import TagRepository from "@/repository/dishBox/recipes/tagRepository";
 import RecipesCarrousel from "@/components/dishBox/recipe/recipeContainers/RecipesCarrousel.astro";
+import WelcomeHeader from "@/components/global/WelcomeHeader.astro";
 const { user_id } = Astro.locals;
 
 const recipes: RecipeMetaDataResponse[] =
@@ -22,6 +23,7 @@ if (user_id) {
 ---
 
 <BaseLayout>
+  <WelcomeHeader title="Recipes" subtitle="Search and explore recipes" />
   <SearchRecipe
     client:load
     initialRecipes={recipes}
