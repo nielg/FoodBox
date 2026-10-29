@@ -21,22 +21,24 @@ export default function TagCarrousel({
   };
 
   return (
-    <section className={s.tagContainer} style={{ maxWidth }}>
-      {tags.map((tag) => {
-        const isActive = activeTags.includes(tag);
+    <div className={s.scrollWrapper}>
+      <section className={s.tagContainer} style={{ maxWidth }}>
+        {tags.map((tag) => {
+          const isActive = activeTags.includes(tag);
 
-        return (
-          <button
-            type="button"
-            key={tag}
-            className={`${t.tag} ${isActive ? t.active : ""}`}
-            onClick={() => handleTagClick(tag)}
-            aria-pressed={isActive}
-          >
-            {tag}
-          </button>
-        );
-      })}
-    </section>
+          return (
+            <button
+              type="button"
+              key={tag}
+              className={`${t.tag} ${isActive ? t.active : ""}`}
+              onClick={() => handleTagClick(tag)}
+              aria-pressed={isActive}
+            >
+              {tag}
+            </button>
+          );
+        })}
+      </section>
+    </div>
   );
 }

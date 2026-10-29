@@ -1,3 +1,35 @@
+.scrollWrapper {
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--primary-200) 2px;
+}
+
+/* 3. Left fade overlay */
+.scrollWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px; /* Width of the shadow fade */
+  z-index: 2;
+  pointer-events: none; /* Allows clicks/scrolls to pass through */
+  background: linear-gradient(to right, var(--bg-app), transparent);
+}
+
+/* 4. Right fade overlay */
+.scrollWrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to left, var(--bg-app), transparent);
+}
+
 .tagContainer {
   display: flex;
   align-items: center;
@@ -6,12 +38,12 @@
   white-space: nowrap;
   padding: 4px 0;
 
-  /* Smooth scrolling on touch devices and hide scrollbars (optional) */
+  /* Smooth scrolling on touch devices and hide scrollbars */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin; /* Firefox */
 }
 
-/* Optional: Subtle Chrome/Safari scrollbar styling */
+/*  Subtle Chrome/Safari scrollbar styling */
 .tagContainer::-webkit-scrollbar {
   height: 4px;
 }
