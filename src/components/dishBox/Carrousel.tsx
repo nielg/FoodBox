@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, animate, type PanInfo } from "framer-motion";
 
-import styles from "@/styles/components/carrousel.module.css";
+import styles from "@/styles/components/img-carrousel.module.css";
 
 const FULL_WIDTH_PX = 120;
 const COLLAPSED_WIDTH_PX = 35;

@@ -12,7 +12,7 @@
   bottom: 0;
   left: 0;
   width: 50px; /* Width of the shadow fade */
-  z-index: 2; /* Sits ON TOP of the tags */
+  z-index: 2;
   pointer-events: none; /* Allows clicks/scrolls to pass through */
   background: linear-gradient(to right, var(--bg-app), transparent);
 }
