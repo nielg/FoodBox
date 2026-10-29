@@ -74,11 +74,14 @@ export default function Navigation() {
           id={activeNav === "dishBox" ? "dishbox-subnav" : "stockbox-subnav"}
           ref={subnavRef}
         >
-          <span
+          <svg
             className={s.arrow}
             style={{ left: arrowLeft ?? "50%" }}
+            viewBox="0 0 24 16"
             aria-hidden="true"
-          />
+          >
+            <path d="M2 16Q0 16 1.2 14.2L10.3 2Q12 0 13.7 2L22.8 14.2Q24 16 22 16Z" />
+          </svg>
           {activeNav === "dishBox" ? (
             <>
               <a href="/">Home</a>
