@@ -97,7 +97,7 @@ const { title, recipes } = Astro.props as Props;
   }
 
   .carousel-arrow {
-    background-color: var(--bg-surface);
+    background-color: var(--bg-app);
     border: none;
     cursor: pointer;
     font-size: 2rem;
@@ -116,18 +116,16 @@ const { title, recipes } = Astro.props as Props;
   }
 
   .carousel-arrow:hover {
-    background-color: var(--primary-100);
     color: var(--primary-700);
     transform: translateY(-50%) scale(1.1);
-    box-shadow: var(--shadow-md);
     opacity: 1;
   }
 
   .carousel-arrow.left {
-    left: -2rem;
+    left: -3rem;
   }
 
   .carousel-arrow.right {
-    right: -2rem;
+    right: -3rem;
   }
 </style>
