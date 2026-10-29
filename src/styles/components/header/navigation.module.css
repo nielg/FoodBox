@@ -1,7 +1,6 @@
 .navigation {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   width: max-content;
 }
 
@@ -11,7 +10,6 @@
   align-items: center;
   justify-content: space-evenly;
   gap: 5rem;
-  padding-top: 2rem;
   width: 100%;
 }
 
